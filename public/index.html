@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" data-theme="neondusk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>vibekeytester — keyboard key tester</title>
+  <meta name="description" content="Press every key on your 104-key US keyboard and watch it light up on a glowing synthwave board." />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <script>try { document.documentElement.setAttribute('data-theme', localStorage.getItem('vibekeytester.theme') || 'neondusk'); } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <!-- synthwave backdrop -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__grid"></div>
+    <div class="backdrop__sun"></div>
+    <div class="backdrop__horizon"></div>
+    <div class="backdrop__scanlines"></div>
+    <div class="backdrop__vignette"></div>
+  </div>
+
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="vibekeytester home">
+        <img class="brand__mark" src="/assets/logo.svg" alt="" width="44" height="44" />
+        <span class="brand__word">vibekeytester</span>
+      </a>
+
+      <label class="field field--theme">
+        <span class="field__label">theme</span>
+        <select id="theme-select" class="select select--theme" aria-label="color theme">
+          <option value="neondusk">Neon Dusk</option>
+          <option value="outrun">Outrun</option>
+          <option value="vaporwave">Vaporwave</option>
+          <option value="cyberpunk">Cyberpunk</option>
+          <option value="midnightgrid">Midnight Grid</option>
+          <option value="chrome">Chrome</option>
+          <option value="toxicglow">Toxic Glow</option>
+          <option value="retroarcade">Retro Arcade</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field__label">board</span>
+        <select id="layout-select" class="select select--layout" aria-label="keyboard layout"></select>
+      </label>
+
+      <div class="topbar__spacer"></div>
+
+      <div class="field">
+        <span class="field__label">thock</span>
+        <button class="sound-toggle" id="sound-toggle" title="Keyboard sound on" aria-label="Toggle keyboard sound">
+          <span id="sound-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view is-active" id="view-test">
+        <!-- coverage / progress -->
+        <div class="coverage">
+          <div class="coverage__big">
+            <span class="coverage__pct" id="cov-pct">0%</span>
+            <span class="coverage__sub" id="cov-count">0 / 104 keys tested</span>
+          </div>
+          <div class="coverage__mid">
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="104" aria-valuenow="0" aria-label="key test progress" id="progress">
+              <div class="progress__fill" id="progress-fill"></div>
+              <div class="progress__shine"></div>
+            </div>
+            <div class="coverage__stats">
+              <div class="coverage__stat">
+                <span class="coverage__value" id="stat-pressed">0</span>
+                <span class="coverage__label">presses</span>
+              </div>
+              <div class="coverage__stat">
+                <span class="coverage__value" id="stat-last">—</span>
+                <span class="coverage__label">last key</span>
+              </div>
+              <div class="coverage__stat">
+                <span class="coverage__value" id="stat-remaining">104</span>
+                <span class="coverage__label">remaining</span>
+              </div>
+            </div>
+          </div>
+          <div class="coverage__actions">
+            <button class="btn btn--ghost" id="reset-btn" title="Clear the tested set and start over">↻ reset test</button>
+          </div>
+        </div>
+
+        <!-- the board -->
+        <div class="kb-panel">
+          <div class="board-meta" id="board-meta"></div>
+          <div class="kb" id="kb" aria-label="on-screen keyboard layout"></div>
+        </div>
+
+        <!-- extras from unusual boards -->
+        <div class="extras is-hidden" id="extras">
+          <span class="extras__title">extra keys detected</span>
+          <div class="extras__list" id="extras-list"></div>
+          <span class="extras__note" id="extras-note">keys pressed that don't appear on the selected board</span>
+        </div>
+
+        <div class="hint" id="hint">
+          press every key on your keyboard — each one <span class="hint-lit">flashes</span> then <span class="hint-glow">glows</span> once verified.
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>vibekeytester · verify your keys, one neon cap at a time</span>
+      <span class="footer__note">some keys (fn · layer · print screen · ctrl+alt+del) never reach the browser — that's expected</span>
+    </footer>
+  </div>
+
+  <script src="/js/keyboards.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
